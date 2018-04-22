@@ -1,0 +1,13 @@
+MAS jasonTest2 {
+
+	infrastructure: Centralised
+
+	environment: env.planetEnv
+
+	agents:
+		col #3;
+        builder;
+
+	aslSourcePath:
+		"src/asl";
+}
