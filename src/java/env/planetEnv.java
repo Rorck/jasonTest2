@@ -366,12 +366,12 @@ public class planetEnv extends Environment {
         	if(agent.equals("col2")){
         		Thread.sleep(10);
         	}else if(agent.equals("col3")){
+        		
         		Thread.sleep(200);
         	}else{
         		Thread.sleep(100);
         	}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         return true;
