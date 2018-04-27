@@ -49,7 +49,7 @@ public class GUI extends JFrame {
         box.add(outScroll);
 
         c.add(box);
-        setSize(610, 750);
+        setSize(700, 760);
         setVisible(true);
     }
 

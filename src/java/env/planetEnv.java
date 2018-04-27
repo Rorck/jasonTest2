@@ -67,17 +67,17 @@ public class planetEnv extends Environment {
 
         boss = new int[2];
         boss[X] = middle;
-        boss[Y] = middle;
+        boss[Y] = 3;
 
         col1 = new int[2];
         col1[X] = middle;
-        col1[Y] = middle;
+        col1[Y] = 3;
         col2 = new int[2];
         col2[X] = middle;
-        col2[Y] = middle;
+        col2[Y] = 3;
         col3 = new int[2];
         col3[X] = middle;
-        col3[Y] = middle;
+        col3[Y] = 3;
 
         rid = 0;
 

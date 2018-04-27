@@ -29,8 +29,30 @@ public class PlanetGUI extends JPanel  {
     }
 
     public void paintComponent(Graphics g) {
-
-        for(int row = 0; row<gridSize; row++) {
+    	
+    		for(int row = 0; row<4; row++){
+    			for(int col = 0; col < gridSize; col++){
+                    if(col == middle && row == 3) {
+                        g.setColor(Color.white);
+                        g.fillRect((col * cellWidth) +3, (row * cellHeight) +3, cellWidth - 5, cellHeight - 5);
+                    }else{
+		    			g.setColor(Color.blue);
+			            g.fillRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
+			            g.setColor(Color.gray);
+			            g.drawRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
+                    }
+	            }
+       		}
+    		
+    		for(int col = 0; col < gridSize; col++){
+    			g.setColor(Color.green);
+	            g.fillRect(col * cellWidth, 4 * cellHeight, cellWidth, cellHeight);
+	            g.setColor(Color.gray);
+	            g.drawRect(col * cellWidth, 4 * cellHeight, cellWidth, cellHeight);
+    		}
+    	
+    	
+        for(int row = 5; row<gridSize; row++) {        	
             for(int col = 0; col<gridSize; col++) {
 
                 g.setColor(new Color(185, 58, 17));
@@ -41,8 +63,8 @@ public class PlanetGUI extends JPanel  {
                 if(planet[col][row] != null) {
 
                     if(col == middle && row == middle) {
-                        g.setColor(Color.white);
-                        g.fillRect((col * cellWidth) +3, (row * cellHeight) +3, cellWidth - 5, cellHeight - 5);
+                        //g.setColor(Color.white);
+                        //g.fillRect((col * cellWidth) +3, (row * cellHeight) +3, cellWidth - 5, cellHeight - 5);
                     } else {
                         Resource r = (Resource) planet[col][row];
                         int type = r.getType();
@@ -99,7 +121,7 @@ public class PlanetGUI extends JPanel  {
 
     public Dimension getPreferredSize() {
 
-        return new Dimension(600, 600);
+        return new Dimension(800, 800);
 
     }
 

@@ -1,6 +1,6 @@
 // Beliefs
 
-pos(boss,15,15).
+pos(boss,15,3).
 checking_cells.
 resource_needed(1).
 
