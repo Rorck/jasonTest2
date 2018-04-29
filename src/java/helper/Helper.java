@@ -13,12 +13,16 @@ import java.util.ArrayList;
 public class Helper {
 	public static ArrayList<Step> getFastestPath(boolean tunnel[][], int originX, int originY, 
 			int destX, int destY) {
-		ArrayList<Step> steps = new ArrayList<Step>();
-		return steps;
+		boolean already[][] = new boolean[size][size];
+		already[originX][originY] = true;
+		ArrayList<Step> steps = new ArrayList<>();
+		explore(tunnel, already, steps, originX, originY, destX, destY);
+		return minSteps;
 	}
 	
-	private static Step minSteps[];
-	private static int minTime;
+	public static int size=6;
+	private static ArrayList<Step> minSteps;
+	private static int minTime = 10000;
 	private static int getDistance(boolean tunnel[][], ArrayList<Step> steps) {
 		int distance = 0;
 		for (Step s: steps) {
@@ -27,7 +31,59 @@ public class Helper {
 		}
 		return distance;
 	}
-	private static void explore(boolean already[][], int origX, int origY, int destX, int destY) {
-		//TODO: Levi megcsinálja asap
+	private static void explore(boolean tunnel[][], boolean already[][], ArrayList<Step> steps, int origX, int origY, int destX, int destY) {
+		if (origX == destX && origY == destY) {
+			int distance = getDistance(tunnel, steps);
+			if (distance < minTime) {
+				minTime = distance;
+				minSteps = new ArrayList<Step>(steps);
+			}
+			return;
+		} else {
+			//left
+			if (origX != 0 && !already[origX-1][origY]) {
+				Step newStep = new Step();
+				newStep.x = origX-1;
+				newStep.y = origY;
+				already[origX-1][origY] = true;
+				ArrayList<Step> alreadyStepped = new ArrayList<>(steps);
+				alreadyStepped.add(newStep);
+				explore(tunnel, already, alreadyStepped, origX-1, origY, destX, destY);
+				already[origX-1][origY] = false;	
+			}
+			//bottom
+			if (origY != size-1 && !already[origX][origY+1]) {
+				Step newStep = new Step();
+				newStep.x = origX;
+				newStep.y = origY+1;
+				already[origX][origY+1] = true;
+				ArrayList<Step> alreadyStepped = new ArrayList<>(steps);
+				alreadyStepped.add(newStep);
+				explore(tunnel, already, alreadyStepped, origX, origY+1, destX, destY);
+				already[origX][origY+1] = false;
+			}
+			//right
+			if (origX != size-1 && !already[origX+1][origY]) {
+				Step newStep = new Step();
+				newStep.x = origX+1;
+				newStep.y = origY;
+				already[origX+1][origY] = true;
+				ArrayList<Step> alreadyStepped = new ArrayList<>(steps);
+				alreadyStepped.add(newStep);
+				explore(tunnel, already, alreadyStepped, origX+1, origY, destX, destY);
+				already[origX+1][origY] = false;
+			}
+			//top
+			if (origY != 0 && !already[origX][origY-1]) {
+				Step newStep = new Step();
+				newStep.x = origX;
+				newStep.y = origY-1;
+				already[origX][origY-1] = true;
+				ArrayList<Step> alreadyStepped = new ArrayList<>(steps);
+				alreadyStepped.add(newStep);
+				explore(tunnel, already, alreadyStepped, origX+1, origY, destX, destY);
+				already[origX][origY-1] = false;
+			}
+		}
 	}
 }
