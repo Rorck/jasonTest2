@@ -5,6 +5,8 @@ package helper;
 
 import java.util.ArrayList;
 
+import env.planetEnv;
+
 /**
  * @author Levente
  * 
@@ -85,5 +87,10 @@ public class Helper {
 				already[origX][origY-1] = false;
 			}
 		}
+	}
+	
+	public static void debug(){
+		planetEnv.gui.out("Hahó");
+		System.out.println("Megyen");
 	}
 }

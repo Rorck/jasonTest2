@@ -2,6 +2,7 @@ package env;
 
 import java.util.Random;
 
+import helper.Helper;
 import jason.asSyntax.Literal;
 import jason.asSyntax.Structure;
 import jason.asSyntax.Term;
@@ -55,7 +56,7 @@ public class planetEnv extends Environment {
 	public int c2res;
 	public int c3res;
 	
-	public GUI gui;
+	public static GUI gui;
 	
 	public planetEnv() {
 
@@ -256,6 +257,10 @@ public class planetEnv extends Environment {
                     }
                 }
             }
+        } else if(action.getFunctor().equals("planTunnel")) {
+        	if(agent.equals("smallDigger")){
+        		Helper.debug();
+        	}
 
         } else if(action.getFunctor().equals(dr)) {
 

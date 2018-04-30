@@ -5,6 +5,7 @@ MAS jasonTest2 {
 	environment: env.planetEnv
 
 	agents:
+		smallDigger;
 		col #3;
         builder;
 
