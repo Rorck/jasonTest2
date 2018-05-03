@@ -11,6 +11,8 @@ resource_needed(1).
    :  checking_cells & not building_finished
    <- !check_for_resources.
 
+
+
 +!check_for_resources
    :  resource_needed(R) & found(R)
    <- !stop_checking;
@@ -56,3 +58,5 @@ resource_needed(1).
    <- .drop_all_desires;
       !go(boss).
 
+@pcf[atomic]
++tunnelPlanned: true <- debug(R).

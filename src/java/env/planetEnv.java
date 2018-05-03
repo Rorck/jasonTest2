@@ -47,7 +47,7 @@ public class planetEnv extends Environment {
 	public Literal finished = Literal.parseLiteral("building_finished");
 	
 	public final String bs = new String("build_using");
-	public final String mr = new String("mine");
+	public final String mine = new String("mine");
 	public final String dr = new String("drop");
 	public final Term nc = Literal.parseLiteral("move_to(next_cell)");
 	
@@ -215,7 +215,7 @@ public class planetEnv extends Environment {
             }
 
             gui.out("Resource "+resourceBuilt+" used, current values needed: r1 = "+s.getr1()+",r2 = "+s.getr2()+", r3 = "+s.getr3());
-        } else if(action.getFunctor().equals(mr)) {
+        } else if(action.getFunctor().equals(mine)) {
 
             if(agent.equals("col1")) {
 
@@ -357,6 +357,8 @@ public class planetEnv extends Environment {
 
             }
 
+        } else if(action.getFunctor().equals("debug")){
+        	gui.out("kecskesajt");
         }
 
         updatePercepts(agent);

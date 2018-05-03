@@ -16,6 +16,7 @@ catastrophe(10,15).
 	
 //when the tunnel is planned, the digging can begin:
 +tunnelPlanned: true <-
+	.broadcast(tell,tunnelPlanned);
 	!dig.
 
 +!dig(Position) : true
