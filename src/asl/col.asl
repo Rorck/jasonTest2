@@ -59,4 +59,4 @@ resource_needed(1).
       !go(boss).
 
 @pcf[atomic]
-+tunnelPlanned: true <- debug(R).
++tunnelPlanned: true <- getTunnel(R).

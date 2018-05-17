@@ -1,8 +1,10 @@
 package env;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import helper.Helper;
+import helper.Step;
 import jason.asSyntax.Literal;
 import jason.asSyntax.Structure;
 import jason.asSyntax.Term;
@@ -25,6 +27,10 @@ public class planetEnv extends Environment {
     public int col1[];
     public int col2[];
     public int col3[];
+    public int smallDigger[];
+    public int bigDigger[];
+    public int rescueUnit[];
+    public int supplyUnit[];
 
     public Integer step = 0;
 
@@ -35,6 +41,10 @@ public class planetEnv extends Environment {
     public Literal col1Pos;
     public Literal col2Pos;
     public Literal col3Pos;
+    public Literal smallDiggerPos;
+    public Literal bigDiggerPos;
+    public Literal rescueUnitPos;
+    public Literal supplyUnitPos;
     public Literal resC1;
     public Literal resC2;
     public Literal resC3;
@@ -58,6 +68,8 @@ public class planetEnv extends Environment {
 	
 	public static GUI gui;
 	
+	public static ArrayList<Step> steps;
+	
 	public planetEnv() {
 
         gridSize = 30;
@@ -79,7 +91,19 @@ public class planetEnv extends Environment {
         col3 = new int[2];
         col3[X] = middle;
         col3[Y] = 3;
-
+        smallDigger = new int[2];
+        smallDigger[X] = middle;
+        smallDigger[Y] = 3;
+        bigDigger = new int[2];
+        bigDigger[X] = middle;
+        bigDigger[Y] = 3;
+        rescueUnit = new int[2];
+        rescueUnit[X] = middle;
+        rescueUnit[Y] = 3;
+        supplyUnit = new int[2];
+        supplyUnit[X] = middle;
+        supplyUnit[Y] = 3;
+        
         rid = 0;
 
         int x;
@@ -139,6 +163,10 @@ public class planetEnv extends Environment {
         updatePercepts("col1");
         updatePercepts("col2");
         updatePercepts("col3");
+        updatePercepts("smallDigger");
+        updatePercepts("bigDigger");
+        updatePercepts("rescueUnit");
+        updatePercepts("supplyUnit");
 
         gui = new GUI(this);
 
@@ -259,7 +287,11 @@ public class planetEnv extends Environment {
             }
         } else if(action.getFunctor().equals("planTunnel")) {
         	if(agent.equals("smallDigger")){
+        		int destX = (new Integer(action.getTerm(0).toString())).intValue();
+                int destY = (new Integer(action.getTerm(1).toString())).intValue();
+
         		Helper.debug();
+        		//steps = Helper.getFastestPath(tunnel, smallDigger[X], smallDigger[Y], destX, destY)
         	}
 
         } else if(action.getFunctor().equals(dr)) {
@@ -357,8 +389,8 @@ public class planetEnv extends Environment {
 
             }
 
-        } else if(action.getFunctor().equals("debug")){
-        	gui.out("kecskesajt");
+        } else if(action.getFunctor().equals("getTunnel")){
+        	
         }
 
         updatePercepts(agent);
@@ -373,7 +405,6 @@ public class planetEnv extends Environment {
         	if(agent.equals("col2")){
         		Thread.sleep(10);
         	}else if(agent.equals("col3")){
-        		
         		Thread.sleep(200);
         	}else{
         		Thread.sleep(100);
@@ -419,7 +450,28 @@ public class planetEnv extends Environment {
                 resC3 = Literal.parseLiteral("found("+resource+")");
                 addPercept("col3",resC3);
             }
-        }
+        } else if(agent.equals("smallDigger")) {
+        	 clearPercepts("smallDigger");
+             smallDiggerPos = Literal.parseLiteral("my_pos("+smallDigger[X]+","+smallDigger[Y]+")");
+             addPercept("smallDigger",smallDiggerPos);
+             
+        } else if(agent.equals("bigDigger")) {
+	       	 clearPercepts("bigDigger");
+	         bigDiggerPos = Literal.parseLiteral("my_pos("+bigDigger[X]+","+bigDigger[Y]+")");
+	         addPercept("bigDigger",bigDiggerPos);
+	         
+	    } else if(agent.equals("rescueUnit")) {
+	       	 clearPercepts("rescueUnit");
+	       	rescueUnitPos = Literal.parseLiteral("my_pos("+rescueUnit[X]+","+rescueUnit[Y]+")");
+	         addPercept("rescueUnit",rescueUnitPos);
+	         
+	    } else if(agent.equals("supplyUnit")) {
+	       	 clearPercepts("supplyUnit");
+	       	supplyUnitPos = Literal.parseLiteral("my_pos("+supplyUnit[X]+","+supplyUnit[Y]+")");
+	         addPercept("supplyUnit",supplyUnitPos);
+	         
+	    }
+        
     }
 
     public PlanetCell[][] getPlanet() {

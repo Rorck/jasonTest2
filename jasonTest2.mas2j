@@ -6,6 +6,9 @@ MAS jasonTest2 {
 
 	agents:
 		smallDigger;
+		bigDigger;
+		supplyUnit;
+		rescueUnit;
 		col #3;
         builder;
 
