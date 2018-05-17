@@ -14,10 +14,14 @@ catastrophe(10,15).
 	planTunnel(X,Y);
 	+tunnelPlanned.
 	
+	
 //when the tunnel is planned, the digging can begin:
 +tunnelPlanned: true <-
 	.broadcast(tell,tunnelPlanned);
 	!dig.
+
++tunnelDigged: true <-
+	.broadcast(tell,supplyGo).
 
 +!dig(Position) : true
    <- ?pos(Position,X,Y);

@@ -10,9 +10,13 @@ import javax.swing.JPanel;
 public class PlanetGUI extends JPanel  {
 	private PlanetCell[][] planet;
     private int cellWidth, cellHeight;
-    private int[] agent1;
-    private int[] agent2;
-    private int[] agent3;
+    private int[] agent1; //col1
+    private int[] agent2; //col2
+    private int[] agent3; //col3
+    private int[] agent4; //smallDigger
+    private int[] agent5; //bigDigger
+    private int[] agent6; //rescueUnit
+    private int[] agent7; //supplyUnit
     private planetEnv environment;
     private int gridSize;
     private int middle;
@@ -92,7 +96,7 @@ public class PlanetGUI extends JPanel  {
             }
         }
 
-        g.setColor(Color.yellow);
+        /*g.setColor(Color.yellow);
         g.fillRoundRect(agent1[0]*cellWidth +3, agent1[1]*cellHeight +3, cellWidth - 5, cellHeight - 5, 3, 3);
         g.setColor(Color.white);
         g.drawString("A", (agent1[0]*cellWidth) +7, (agent1[1]*cellHeight) +14);
@@ -105,7 +109,27 @@ public class PlanetGUI extends JPanel  {
         g.setColor(Color.black);
         g.fillRoundRect(agent3[0]*cellWidth +3, agent3[1]*cellHeight +3, cellWidth - 5, cellHeight - 5, 3, 3);
         g.setColor(Color.white);
-        g.drawString("C", (agent3[0]*cellWidth) +7, (agent3[1]*cellHeight) +14);
+        g.drawString("C", (agent3[0]*cellWidth) +7, (agent3[1]*cellHeight) +14);*/
+        
+        g.setColor(Color.red);
+        g.fillRoundRect(agent4[0]*cellWidth +3, agent4[1]*cellHeight +3, cellWidth - 5, cellHeight - 5, 3, 3);
+        g.setColor(Color.white);
+        g.drawString("SD", (agent4[0]*cellWidth) +7, (agent4[1]*cellHeight) +14);
+
+        g.setColor(Color.red);
+        g.fillRoundRect(agent5[0]*cellWidth +3, agent5[1]*cellHeight +3, cellWidth - 5, cellHeight - 5, 3, 3);
+        g.setColor(Color.white);
+        g.drawString("BD", (agent5[0]*cellWidth) +7, (agent5[1]*cellHeight) +14);
+
+        g.setColor(Color.red);
+        g.fillRoundRect(agent6[0]*cellWidth +3, agent6[1]*cellHeight +3, cellWidth - 5, cellHeight - 5, 3, 3);
+        g.setColor(Color.white);
+        g.drawString("RU", (agent6[0]*cellWidth) +7, (agent6[1]*cellHeight) +14);
+        
+        g.setColor(Color.red);
+        g.fillRoundRect(agent7[0]*cellWidth +3, agent7[1]*cellHeight +3, cellWidth - 5, cellHeight - 5, 3, 3);
+        g.setColor(Color.white);
+        g.drawString("SU", (agent7[0]*cellWidth) +7, (agent7[1]*cellHeight) +14);
 
     }
 
@@ -113,9 +137,14 @@ public class PlanetGUI extends JPanel  {
     public void update() {
 
         planet = environment.getPlanet();
-        agent1 = environment.geta1();
-        agent2 = environment.geta2();
-        agent3 = environment.geta3();
+        //agent1 = environment.geta1();
+        //agent2 = environment.geta2();
+        //agent3 = environment.geta3();
+        agent4 = environment.getSmallDigger();
+        agent5 = environment.getBigDigger();
+        agent6 = environment.getRescueUnit();
+        agent7 = environment.getSupplyUnit();
+        
         repaint();
     }
 

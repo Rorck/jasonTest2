@@ -3,4 +3,4 @@
 // Plans
 
 @pcf[atomic]
-+tunnelPlanned: true <- getTunnel(R).
++supplyGo: true <- move_to(Position).

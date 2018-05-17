@@ -487,6 +487,18 @@ public class planetEnv extends Environment {
     public int[] geta3() {
         return col3;
     }
+    public int[] getSmallDigger() {
+    	return smallDigger;
+    }
+    public int[] getBigDigger() {
+    	return bigDigger;
+    }
+    public int[] getRescueUnit() {
+    	return rescueUnit;
+    }
+    public int[] getSupplyUnit() {
+    	return supplyUnit;
+    }
 
     public void stop() {
         super.stop();

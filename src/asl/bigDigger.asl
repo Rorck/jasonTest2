@@ -3,4 +3,4 @@
 // Plans
 
 @pcf[atomic]
-+tunnelPlanned: true <- getTunnel(R).
++bigDiggerGo: true <- move_to(Position).
