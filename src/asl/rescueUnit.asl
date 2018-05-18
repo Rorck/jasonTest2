@@ -1,6 +1,12 @@
 // Beliefs
 
 // Plans
++my_pos(X,Y)
+   :  rescueGo & not finished
+   <- !rescue.
+   
++!rescue: true <- move(R).
 
-@pcf[atomic]
-+rescueGo: true <- move_to(Position).
++rescueGo: true <- 
+	move(R);
+	-finished.
