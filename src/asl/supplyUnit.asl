@@ -3,4 +3,4 @@
 // Plans
 
 @pcf[atomic]
-+supplyGo: true <- move_to(Position).
++supplyGo: true <- move(R).

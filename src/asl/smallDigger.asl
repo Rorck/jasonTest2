@@ -26,4 +26,5 @@ catastrophe(10,15).
 +!dig(Position) : true
    <- ?pos(Position,X,Y);
       move(R);
+      .broadcast(tell,supplyGo);
       !dig(Position).

@@ -66,10 +66,6 @@ public class PlanetGUI extends JPanel  {
 
                 if(planet[col][row] != null) {
 
-                    if(col == middle && row == middle) {
-                        //g.setColor(Color.white);
-                        //g.fillRect((col * cellWidth) +3, (row * cellHeight) +3, cellWidth - 5, cellHeight - 5);
-                    } else {
                         Resource r = (Resource) planet[col][row];
                         int type = r.getType();
                         int amount = r.getAmount();
@@ -100,7 +96,7 @@ public class PlanetGUI extends JPanel  {
                         }else if(type == 5){
                         	g.fillOval(col*cellWidth +3, row*cellHeight +3, cellWidth - 5, cellHeight - 5);
                         }
-                    }
+                    
 
                 }
 

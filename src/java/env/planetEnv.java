@@ -177,18 +177,38 @@ public class planetEnv extends Environment {
         
         tunnel = new boolean[gridSize][gridSize];
         for (int i = 3; i < 23; ++i) {
-        	if (i!=12 && i!=13) tunnel[15][i] = true;
+        	if (i!=12 && i!=13) {
+        		tunnel[15][i] = true;
+        		planet[15][i] = new Resource(4);
+        	}
         }
         for (int i = 10; i < 27; ++i){
         	tunnel[i][6] = true;
+        	planet[i][6] = new Resource(4);
         	tunnel[i][15] = true;
-        	if (i<16) tunnel[i][9] = true;
-        	if (i>15 && i < 19) tunnel[i][11] = true;
+        	planet[i][15] = new Resource(4);
+        	if (i<16) {
+        		tunnel[i][9] = true;
+        		planet[i][9] = new Resource(4);
+        	}
+        	if (i>15 && i < 19) {
+        		tunnel[i][11] = true;
+        		planet[i][11] = new Resource(4);
+        	}
         }
         for (int i = 6; i < 23; ++i) {
-        	if (i<16) tunnel[19][i] = true;
-        	if (i == 10 || i == 11) tunnel[10][i] = true;
-        	if (i<15) tunnel[26][i] = true;
+        	if (i<16) {
+        		tunnel[19][i] = true;
+        		planet[19][i] = new Resource(4);
+        	}
+        	if (i == 10 || i == 11) {
+        		tunnel[10][i] = true;
+        		planet[10][i] = new Resource(4);
+        	}
+        	if (i>14) {
+        		tunnel[26][i] = true;
+        		planet[26][i] = new Resource(4);
+        	}
         }
         
         gui = new GUI(this);
@@ -314,10 +334,10 @@ public class planetEnv extends Environment {
                 int destY = (new Integer(action.getTerm(1).toString())).intValue();
                 planet[destX][destY] = new Resource(5);
         		//Helper.debug();
-        		steps = Helper.getFastestPath(tunnel, smallDigger[X], smallDigger[Y], destX, destY);
+        		/*steps = Helper.getFastestPath(tunnel, smallDigger[X], smallDigger[Y], destX, destY);
         		for (Step s: steps) {
         			System.out.println(s.x +" "+ s.y);
-        		}
+        		}*/
         	}
 
         } else if(action.getFunctor().equals(dr)) {
@@ -419,7 +439,8 @@ public class planetEnv extends Environment {
         	
         } else if(action.getFunctor().equals("move")){
         	if(agent.equals("smallDigger")) {
-        		
+        		smallDigger[X] = steps.get(++smallDiggerStepIndex).x;
+        		smallDigger[Y] = steps.get(smallDiggerStepIndex).y;
         	}
         }
 
