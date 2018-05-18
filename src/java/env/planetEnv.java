@@ -482,6 +482,14 @@ public class planetEnv extends Environment {
         		if(rescueUnitStepIndex == 0 || rescueUnitStepIndex == steps.size()){
         			rescueUnitWay = !rescueUnitWay;
         		}
+        	} else if(agent.equals("bigDigger")) {
+        		if(bigDiggerStepIndex > 0){
+	        		bigDigger[X] = steps.get(--bigDiggerStepIndex).x;
+	        		bigDigger[Y] = steps.get(bigDiggerStepIndex).y;
+        		}
+        		if(!(bigDigger[X] == 10 && bigDigger[Y] == 15) ) {
+        			planet[bigDigger[X]][bigDigger[Y]] = new Resource(4);
+        		}
         	}
         }
 
@@ -498,8 +506,14 @@ public class planetEnv extends Environment {
         		Thread.sleep(10);
         	}else if(agent.equals("col3")){
         		Thread.sleep(200);
-        	}else{
+        	}else if(agent.equals("bigDigger")){
+        		Thread.sleep(500);
+        	}else if(agent.equals("smallDigger")){
         		Thread.sleep(100);
+        	}else if(agent.equals("rescueUnit")){
+        		Thread.sleep(100);
+        	}else if(agent.equals("supplyUnit")){
+        		Thread.sleep(500);
         	}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -554,8 +568,13 @@ public class planetEnv extends Environment {
      		} 
         } else if(agent.equals("bigDigger")) {
 	       	 clearPercepts("bigDigger");
-	         bigDiggerPos = Literal.parseLiteral("my_pos("+bigDigger[X]+","+bigDigger[Y]+")");
-	         addPercept("bigDigger",bigDiggerPos);
+	       	if(bigDigger[X] == 10 && bigDigger[Y] == 15) {
+     			Literal msg = Literal.parseLiteral("bigTunnelDigged");
+     			addPercept("bigDigger",msg);
+     		}else{
+		         bigDiggerPos = Literal.parseLiteral("my_pos("+bigDigger[X]+","+bigDigger[Y]+")");
+		         addPercept("bigDigger",bigDiggerPos);
+     		}
 	         
 	    } else if(agent.equals("rescueUnit")) {
 	       	 clearPercepts("rescueUnit");
