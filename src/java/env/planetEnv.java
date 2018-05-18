@@ -222,6 +222,9 @@ public class planetEnv extends Environment {
 	
 	@Override
 	public boolean executeAction(String agent, Structure action) {
+		boolean sDigged = false;
+		boolean bDigged = false;
+		
         if(action.equals(nc)) {
 
             if(agent.equals("col1")) {
@@ -453,6 +456,10 @@ public class planetEnv extends Environment {
 	        		smallDigger[X] = steps.get(--smallDiggerStepIndex).x;
 	        		smallDigger[Y] = steps.get(smallDiggerStepIndex).y;
 	        		if(!(smallDigger[X] == 10 && smallDigger[Y] == 15) ) {
+	        			Resource r = (Resource) planet[smallDigger[X]][smallDigger[Y]];
+	        			if(r == null){
+	        				sDigged = true;
+	        			}
 	        			planet[smallDigger[X]][smallDigger[Y]] = new Resource(6);
 	        		}
         		}
@@ -487,12 +494,45 @@ public class planetEnv extends Environment {
 	        		bigDigger[X] = steps.get(--bigDiggerStepIndex).x;
 	        		bigDigger[Y] = steps.get(bigDiggerStepIndex).y;
 	        		if(!(bigDigger[X] == 10 && bigDigger[Y] == 15) ) {
+	        			Resource r = (Resource) planet[smallDigger[X]][smallDigger[Y]];
+	        			if(r == null || r.getType() == 6){
+	        				bDigged = true;
+	        			}
 	        			planet[bigDigger[X]][bigDigger[Y]] = new Resource(4);
 	        		}
         		}
         		
         	}
         }
+        
+        try {
+        	step++;
+        	if(agent.equals("col2")){
+        		Thread.sleep(10);
+        	}else if(agent.equals("col3")){
+        		Thread.sleep(200);
+        	}else if(agent.equals("smallDigger")){
+        		if(!sDigged){
+        			Thread.sleep(500);
+        		}else{
+        			Thread.sleep(1000);
+        		}
+        		
+        	}else if(agent.equals("bigDigger")){
+        		if(!bDigged){
+        			Thread.sleep(1000);
+        		}else{
+        			Thread.sleep(2000);
+        		}
+        		
+        	}else if(agent.equals("rescueUnit")){
+        		Thread.sleep(500);
+        	}else if(agent.equals("supplyUnit")){
+        		Thread.sleep(500);
+        	}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
         updatePercepts(agent);
 
@@ -501,24 +541,7 @@ public class planetEnv extends Environment {
         // gui.out(getPercepts("col1").toString()+getPercepts("col2").toString()+getPercepts("col3").toString()+getPercepts("builder").toString());
         gui.update();
 
-        try {
-        	step++;
-        	if(agent.equals("col2")){
-        		Thread.sleep(10);
-        	}else if(agent.equals("col3")){
-        		Thread.sleep(200);
-        	}else if(agent.equals("smallDigger")){
-        		Thread.sleep(100);
-        	}else if(agent.equals("bigDigger")){
-        		Thread.sleep(500);
-        	}else if(agent.equals("rescueUnit")){
-        		Thread.sleep(100);
-        	}else if(agent.equals("supplyUnit")){
-        		Thread.sleep(100);
-        	}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+        
         return true;
 
     }
