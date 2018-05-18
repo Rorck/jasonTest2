@@ -3,18 +3,27 @@
 // Plans
 
 +my_pos(X,Y)
-   : supplyFinish & not bigFinished
+   : supplyFinished & not bigFinished
    <- !dig.
 	
 //when the supplier is finished, the digging can begin:
-+supplyFinish: true <-
-	move(R).
++supplyFinished: true <-
+	!dig.
 
 +bigTunnelDigged: true <-
 	.broadcast(tell,rescueGo).
 
++iShouldGo: true <- move(R).
+
++iShouldntGo: true <- 
+	.broadcast(tell,supplyGo).
+
 +!dig : true
    <- move(R).
+
++!decide: true
+<- decide(R);
+-supplyFinished.
 
 @pcf[atomic]
 +bigDiggerGo: true <- move_to(Position).

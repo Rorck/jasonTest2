@@ -3,6 +3,7 @@ package env;
 import java.util.ArrayList;
 import java.util.Random;
 
+import rescueAgents.BigDigger;
 import helper.Helper;
 import helper.Step;
 import jason.asSyntax.Literal;
@@ -219,11 +220,13 @@ public class planetEnv extends Environment {
         gui = new GUI(this);
 
     }
-	
+	int decision = 0;
+	int decisionCount = 0;
 	@Override
 	public boolean executeAction(String agent, Structure action) {
 		boolean sDigged = false;
 		boolean bDigged = false;
+		decision = 0;
 		
         if(action.equals(nc)) {
 
@@ -450,7 +453,21 @@ public class planetEnv extends Environment {
 
         } else if(action.getFunctor().equals("getTunnel")){
         	
+        } else if(action.getFunctor().equals("decide")){
+        	if(decisionCount == 0){
+	        	if(BigDigger.supplierIsFaster(steps,tunnel)){
+	        		decision = 2;
+	        	}else{
+	        		decision = 1;
+	        	}
+	        	decisionCount++;
+        	}else if(decisionCount == 1 || decisionCount == 2){
+        		decision = 2;
+        	}else{
+        		decision = 1;
+        	}
         } else if(action.getFunctor().equals("move")){
+        
         	if(agent.equals("smallDigger")) {
         		if(smallDiggerStepIndex > 0){
 	        		smallDigger[X] = steps.get(--smallDiggerStepIndex).x;
@@ -545,24 +562,6 @@ public class planetEnv extends Environment {
         // gui.out(getPercepts("col1").toString()+getPercepts("col2").toString()+getPercepts("col3").toString()+getPercepts("builder").toString());
         gui.update();
 
-        try {
-        	step++;
-        	if(agent.equals("col2")){
-        		Thread.sleep(10);
-        	}else if(agent.equals("col3")){
-        		Thread.sleep(200);
-        	}else if(agent.equals("bigDigger")){
-        		Thread.sleep(500);
-        	}else if(agent.equals("smallDigger")){
-        		Thread.sleep(100);
-        	}else if(agent.equals("rescueUnit")){
-        		Thread.sleep(100);
-        	}else if(agent.equals("supplyUnit")){
-        		Thread.sleep(500);
-        	}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
         return true;
 
@@ -613,14 +612,22 @@ public class planetEnv extends Environment {
 	             addPercept("smallDigger",smallDiggerPos);
      		} 
         } else if(agent.equals("bigDigger")) {
-	       	 clearPercepts("bigDigger");
-	       	if(bigDigger[X] == 10 && bigDigger[Y] == 15) {
-     			Literal msg = Literal.parseLiteral("bigTunnelDigged");
+	       	clearPercepts("bigDigger");
+	       	if(decision == 0){
+		       	if(bigDigger[X] == 10 && bigDigger[Y] == 15) {
+	     			Literal msg = Literal.parseLiteral("bigTunnelDigged");
+	     			addPercept("bigDigger",msg);
+	     		}else{
+	     			bigDiggerPos = Literal.parseLiteral("my_pos("+bigDigger[X]+","+bigDigger[Y]+")");
+	     			addPercept("bigDigger",bigDiggerPos);
+	     		}
+	       	}else if(decision == 1){
+	       		Literal msg = Literal.parseLiteral("iShouldGo");
      			addPercept("bigDigger",msg);
-     		}else{
-	         bigDiggerPos = Literal.parseLiteral("my_pos("+bigDigger[X]+","+bigDigger[Y]+")");
-	         addPercept("bigDigger",bigDiggerPos);
-     		}
+	       	}else{
+	       		Literal msg = Literal.parseLiteral("iShouldntGo");
+     			addPercept("bigDigger",msg);
+	       	}
 	         
 	    } else if(agent.equals("rescueUnit")) {
 	       	 clearPercepts("rescueUnit");
@@ -635,6 +642,8 @@ public class planetEnv extends Environment {
 	    } else if(agent.equals("supplyUnit")) {
 	       	 clearPercepts("supplyUnit");
 	       	 if(supplyUnit[X] == 15 && supplyUnit[Y] == 3 && supplyUnitWay){
+	       		 supplyUnitStepIndex = steps.size()-1;
+	       		 supplyUnitWay = false;
 	       		Literal msg = Literal.parseLiteral("finished");
      			addPercept("supplyUnit",msg);
 	       	 } else {
