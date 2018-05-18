@@ -70,12 +70,12 @@ public class planetEnv extends Environment {
 	
 	public static ArrayList<Step> steps;
 	
-<<<<<<< HEAD
+
 	public int smallDiggerStepIndex = 0;
 	public int supplyUnitStepIndex = 0;
-=======
+
 	public boolean[][] tunnel;
->>>>>>> branch 'master' of https://github.com/Rorck/jasonTest2.git
+
 	
 	public planetEnv() {
 
