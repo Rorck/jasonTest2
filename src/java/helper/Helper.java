@@ -221,6 +221,10 @@ public class Helper {
 				}
 				origX = bestX;
 				origY = bestY;
+				Step newStep = new Step();
+				newStep.x = origX;
+				newStep.y = origY;
+				anssteps.add(newStep);
 				
 				oke = true;
 				for (i = moving[bestX][bestY].size()-1; i >= 0; --i) {
@@ -248,6 +252,10 @@ public class Helper {
 				}
 				origX = bestX;
 				origY = bestY;
+				Step newStep = new Step();
+				newStep.x = origX;
+				newStep.y = origY;
+				anssteps.add(newStep);
 			}
 		} while (!oke);
 		return anssteps;
