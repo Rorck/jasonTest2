@@ -10,6 +10,11 @@ public class Resource  extends PlanetCell {
         amount = am;
 
     }
+    
+    public Resource(int t){
+    	type = t;
+    	amount = 0;
+    }
 
     public int getType() {
 

@@ -70,6 +70,9 @@ public class planetEnv extends Environment {
 	
 	public static ArrayList<Step> steps;
 	
+	public int smallDiggerStepIndex = 0;
+	public int supplyUnitStepIndex = 0;
+	
 	public planetEnv() {
 
         gridSize = 30;
@@ -109,7 +112,7 @@ public class planetEnv extends Environment {
         int x;
         int y;
 
-        for(int i = 0; i<11; i++) {
+        /*for(int i = 0; i<11; i++) {
 
             x = random.nextInt(gridSize);
             y = random.nextInt(gridSize);
@@ -152,7 +155,7 @@ public class planetEnv extends Environment {
 
             planet[x][y] = new Resource(3, 5);
             resourcemap[x][y] = true;
-        }
+        }*/
 
         planet[middle][middle] = new Site();
 
@@ -289,7 +292,7 @@ public class planetEnv extends Environment {
         	if(agent.equals("smallDigger")){
         		int destX = (new Integer(action.getTerm(0).toString())).intValue();
                 int destY = (new Integer(action.getTerm(1).toString())).intValue();
-
+                planet[destX][destY] = new Resource(5);
         		Helper.debug();
         		//steps = Helper.getFastestPath(tunnel, smallDigger[X], smallDigger[Y], destX, destY)
         	}
@@ -391,6 +394,10 @@ public class planetEnv extends Environment {
 
         } else if(action.getFunctor().equals("getTunnel")){
         	
+        } else if(action.getFunctor().equals("move")){
+        	if(agent.equals("smallDigger")) {
+        		
+        	}
         }
 
         updatePercepts(agent);

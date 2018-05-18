@@ -25,5 +25,5 @@ catastrophe(10,15).
 
 +!dig(Position) : true
    <- ?pos(Position,X,Y);
-      move_towards(X,Y);
+      move(R);
       !dig(Position).

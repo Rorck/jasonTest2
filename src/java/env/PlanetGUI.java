@@ -83,12 +83,23 @@ public class PlanetGUI extends JPanel  {
                         case 3:
                             g.setColor(Color.blue);
                             break;
+                        case 4:
+                        	g.setColor(Color.LIGHT_GRAY);
+                        	break;
+                        case 5:
+                        	g.setColor(Color.YELLOW);
                         }
-
-                        g.fillOval(col*cellWidth +3, row*cellHeight +3, cellWidth - 5, cellHeight - 5);
-                        g.setColor(Color.black);
-                        g.setFont(new Font("Arial", Font.PLAIN, 11));
-                        g.drawString(""+amount, (col * cellWidth) +8, (row * cellHeight) +14);
+                        
+                        if(type < 4){
+	                        g.fillOval(col*cellWidth +3, row*cellHeight +3, cellWidth - 5, cellHeight - 5);
+	                        g.setColor(Color.black);
+	                        g.setFont(new Font("Arial", Font.PLAIN, 11));
+	                        g.drawString(""+amount, (col * cellWidth) +8, (row * cellHeight) +14);
+                        }else if(type == 4){
+                        	g.fillRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
+                        }else if(type == 5){
+                        	g.fillOval(col*cellWidth +3, row*cellHeight +3, cellWidth - 5, cellHeight - 5);
+                        }
                     }
 
                 }
