@@ -70,8 +70,12 @@ public class planetEnv extends Environment {
 	
 	public static ArrayList<Step> steps;
 	
+<<<<<<< HEAD
 	public int smallDiggerStepIndex = 0;
 	public int supplyUnitStepIndex = 0;
+=======
+	public boolean[][] tunnel;
+>>>>>>> branch 'master' of https://github.com/Rorck/jasonTest2.git
 	
 	public planetEnv() {
 
@@ -170,7 +174,23 @@ public class planetEnv extends Environment {
         updatePercepts("bigDigger");
         updatePercepts("rescueUnit");
         updatePercepts("supplyUnit");
-
+        
+        tunnel = new boolean[gridSize][gridSize];
+        for (int i = 3; i < 23; ++i) {
+        	if (i!=12 && i!=13) tunnel[15][i] = true;
+        }
+        for (int i = 10; i < 27; ++i){
+        	tunnel[i][6] = true;
+        	tunnel[i][15] = true;
+        	if (i<16) tunnel[i][9] = true;
+        	if (i>15 && i < 19) tunnel[i][11] = true;
+        }
+        for (int i = 6; i < 23; ++i) {
+        	if (i<16) tunnel[19][i] = true;
+        	if (i == 10 || i == 11) tunnel[10][i] = true;
+        	if (i<15) tunnel[26][i] = true;
+        }
+        
         gui = new GUI(this);
 
     }
