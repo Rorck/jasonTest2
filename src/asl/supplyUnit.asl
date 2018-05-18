@@ -6,7 +6,7 @@
    <- !deliver.
 
 +finished: true
-	<- .broadcast(tell,supplyFinished).   
+	<- .broadcast(tell,supplyFinish).   
    
 +!deliver: true <- move(R).
 +supplyGo: true <- 

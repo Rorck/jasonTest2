@@ -3,11 +3,11 @@
 // Plans
 
 +my_pos(X,Y)
-   : supplyFinished & not bigFinished
+   : supplyFinish & not bigFinished
    <- !dig.
 	
 //when the supplier is finished, the digging can begin:
-+supplyFinished: true <-
++supplyFinish: true <-
 	move(R).
 
 +bigTunnelDigged: true <-
