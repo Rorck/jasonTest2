@@ -9,8 +9,8 @@ MAS jasonTest2 {
 		bigDigger;
 		supplyUnit;
 		rescueUnit;
-		col #3;
-        builder;
+		//col #3;
+        //builder;
 
 	aslSourcePath:
 		"src/asl";
