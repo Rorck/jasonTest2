@@ -22,7 +22,7 @@ public class Helper {
 		return minSteps;
 	}
 	
-	public static int size=6;
+	public static int size=17;
 	private static ArrayList<Step> minSteps;
 	private static int minTime = 10000;
 	private static int getDistance(boolean tunnel[][], ArrayList<Step> steps) {
@@ -34,6 +34,7 @@ public class Helper {
 		return distance;
 	}
 	private static void explore(boolean tunnel[][], boolean already[][], ArrayList<Step> steps, int origX, int origY, int destX, int destY) {
+		if (origX == size-1 || origY == size-1) return;
 		if (origX == destX && origY == destY) {
 			int distance = getDistance(tunnel, steps);
 			if (distance < minTime) {
@@ -47,6 +48,7 @@ public class Helper {
 				Step newStep = new Step();
 				newStep.x = origX-1;
 				newStep.y = origY;
+				//System.out.println("balra");
 				already[origX-1][origY] = true;
 				ArrayList<Step> alreadyStepped = new ArrayList<>(steps);
 				alreadyStepped.add(newStep);
@@ -54,10 +56,11 @@ public class Helper {
 				already[origX-1][origY] = false;	
 			}
 			//bottom
-			if (origY != size-1 && !already[origX][origY+1]) {
+			if (origY != size-2 && !already[origX][origY+1]) {
 				Step newStep = new Step();
 				newStep.x = origX;
 				newStep.y = origY+1;
+				//System.out.println("le");
 				already[origX][origY+1] = true;
 				ArrayList<Step> alreadyStepped = new ArrayList<>(steps);
 				alreadyStepped.add(newStep);
@@ -65,10 +68,11 @@ public class Helper {
 				already[origX][origY+1] = false;
 			}
 			//right
-			if (origX != size-1 && !already[origX+1][origY]) {
+			if (origX != size-2 && !already[origX+1][origY]) {
 				Step newStep = new Step();
 				newStep.x = origX+1;
 				newStep.y = origY;
+				//System.out.println("jobbra");
 				already[origX+1][origY] = true;
 				ArrayList<Step> alreadyStepped = new ArrayList<>(steps);
 				alreadyStepped.add(newStep);
@@ -80,6 +84,7 @@ public class Helper {
 				Step newStep = new Step();
 				newStep.x = origX;
 				newStep.y = origY-1;
+				//System.out.println("fel");
 				already[origX][origY-1] = true;
 				ArrayList<Step> alreadyStepped = new ArrayList<>(steps);
 				alreadyStepped.add(newStep);

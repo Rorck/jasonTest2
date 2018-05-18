@@ -313,8 +313,11 @@ public class planetEnv extends Environment {
         		int destX = (new Integer(action.getTerm(0).toString())).intValue();
                 int destY = (new Integer(action.getTerm(1).toString())).intValue();
                 planet[destX][destY] = new Resource(5);
-        		Helper.debug();
-        		//steps = Helper.getFastestPath(tunnel, smallDigger[X], smallDigger[Y], destX, destY)
+        		//Helper.debug();
+        		steps = Helper.getFastestPath(tunnel, smallDigger[X], smallDigger[Y], destX, destY);
+        		for (Step s: steps) {
+        			System.out.println(s.x +" "+ s.y);
+        		}
         	}
 
         } else if(action.getFunctor().equals(dr)) {
