@@ -336,6 +336,7 @@ public class planetEnv extends Environment {
         		//Helper.debug();
         		//steps = Helper.getFastestPath(tunnel, smallDigger[X], smallDigger[Y], destX, destY);
                 steps = Helper.getSteps(tunnel, smallDigger[X], smallDigger[Y], destX, destY);
+                smallDiggerStepIndex = steps.size()-1;
         		for (Step s: steps) {
         			System.out.println(s.x +" "+ s.y);
         		}
@@ -440,8 +441,11 @@ public class planetEnv extends Environment {
         	
         } else if(action.getFunctor().equals("move")){
         	if(agent.equals("smallDigger")) {
-        		smallDigger[X] = steps.get(++smallDiggerStepIndex).x;
+        		smallDigger[X] = steps.get(--smallDiggerStepIndex).x;
         		smallDigger[Y] = steps.get(smallDiggerStepIndex).y;
+        		if(planet[smallDigger[X]][smallDigger[Y]] == null) {
+        			planet[smallDigger[X]][smallDigger[Y]] = new Resource(4);
+        		}
         	}
         }
 

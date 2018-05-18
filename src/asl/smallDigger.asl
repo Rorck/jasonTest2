@@ -7,7 +7,9 @@
 catastrophe(10,15).
 
 /* Plans */
-
++my_pos(X,Y)
+   :  not finished
+   <- !dig.
 
 //when the catastrophe occurs plan the new tunnel, and note that the new tunnel is planned.
 +catastrophe(X,Y): true <-
@@ -23,8 +25,6 @@ catastrophe(10,15).
 +tunnelDigged: true <-
 	.broadcast(tell,supplyGo).
 
-+!dig(Position) : true
-   <- ?pos(Position,X,Y);
-      move(R);
-      .broadcast(tell,supplyGo);
-      !dig(Position).
++!dig : true
+   <- move(R);
+      .broadcast(tell,supplyGo).
