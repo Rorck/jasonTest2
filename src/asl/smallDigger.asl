@@ -22,9 +22,10 @@ catastrophe(10,15).
 	.broadcast(tell,tunnelPlanned);
 	!dig.
 
-+tunnelDigged: true <-
-	.broadcast(tell,supplyGo).
++tunnelDigged: not finished <-
+	.broadcast(tell,supplyGo);
+	+finished.
 
 +!dig : true
-   <- move(R);
-      .broadcast(tell,supplyGo).
+   <- move(R).
+      

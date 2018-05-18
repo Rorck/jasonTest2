@@ -1,6 +1,14 @@
 // Beliefs
 
 // Plans
++my_pos(X,Y)
+   :  supplyGo & not finished
+   <- !deliver.
 
-@pcf[atomic]
-+supplyGo: true <- move(R).
++finished: true
+	<- .broadcast(tell,supplyFinished).   
+   
++!deliver: true <- move(R).
++supplyGo: true <- 
+	move(R);
+	-finished.

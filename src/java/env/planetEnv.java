@@ -73,6 +73,11 @@ public class planetEnv extends Environment {
 
 	public int smallDiggerStepIndex = 0;
 	public int supplyUnitStepIndex = 0;
+	public int rescueUnitStepIndex;
+	public int bigDiggerStepIndex;
+	
+	public boolean supplyUnitWay = false; //false - to dest, true - to home
+	public boolean rescueUnitWay = false; //false - to dest, true - to home
 
 	public boolean[][] tunnel;
 
@@ -337,6 +342,9 @@ public class planetEnv extends Environment {
         		//steps = Helper.getFastestPath(tunnel, smallDigger[X], smallDigger[Y], destX, destY);
                 steps = Helper.getSteps(tunnel, smallDigger[X], smallDigger[Y], destX, destY);
                 smallDiggerStepIndex = steps.size()-1;
+                supplyUnitStepIndex = steps.size()-1;
+                rescueUnitStepIndex = steps.size()-1;
+                bigDiggerStepIndex = steps.size()-1;
         		for (Step s: steps) {
         			System.out.println(s.x +" "+ s.y);
         		}
@@ -441,10 +449,38 @@ public class planetEnv extends Environment {
         	
         } else if(action.getFunctor().equals("move")){
         	if(agent.equals("smallDigger")) {
-        		smallDigger[X] = steps.get(--smallDiggerStepIndex).x;
-        		smallDigger[Y] = steps.get(smallDiggerStepIndex).y;
-        		if(planet[smallDigger[X]][smallDigger[Y]] == null) {
-        			planet[smallDigger[X]][smallDigger[Y]] = new Resource(4);
+        		if(smallDiggerStepIndex > 0){
+	        		smallDigger[X] = steps.get(--smallDiggerStepIndex).x;
+	        		smallDigger[Y] = steps.get(smallDiggerStepIndex).y;
+	        		if(!(smallDigger[X] == 10 && smallDigger[Y] == 15) ) {
+	        			planet[smallDigger[X]][smallDigger[Y]] = new Resource(6);
+	        		}
+        		}
+        		
+        	} else if(agent.equals("supplyUnit")){
+        		if(supplyUnitStepIndex > 0 && !supplyUnitWay) {
+        			supplyUnit[X] = steps.get(--supplyUnitStepIndex).x;
+        			supplyUnit[Y] = steps.get(supplyUnitStepIndex).y;
+        		} else if(supplyUnitStepIndex < steps.size() && supplyUnitWay){
+        			supplyUnit[X] = steps.get(++supplyUnitStepIndex).x;
+        			supplyUnit[Y] = steps.get(supplyUnitStepIndex).y;
+        		}
+        		
+        		if(supplyUnitStepIndex == 0 || supplyUnitStepIndex == steps.size()){
+        			supplyUnitWay = !supplyUnitWay;
+        		}
+        		
+        	} else if(agent.equals("rescueUnit")){
+        		if(rescueUnitStepIndex > 0 && !rescueUnitWay) {
+        			rescueUnit[X] = steps.get(--rescueUnitStepIndex).x;
+        			rescueUnit[Y] = steps.get(rescueUnitStepIndex).y;
+        		} else if(rescueUnitStepIndex < steps.size() && rescueUnitWay){
+        			rescueUnit[X] = steps.get(++rescueUnitStepIndex).x;
+        			rescueUnit[Y] = steps.get(rescueUnitStepIndex).y;
+        		}
+        		
+        		if(rescueUnitStepIndex == 0 || rescueUnitStepIndex == steps.size()){
+        			rescueUnitWay = !rescueUnitWay;
         		}
         	}
         }
@@ -508,9 +544,14 @@ public class planetEnv extends Environment {
             }
         } else if(agent.equals("smallDigger")) {
         	 clearPercepts("smallDigger");
-             smallDiggerPos = Literal.parseLiteral("my_pos("+smallDigger[X]+","+smallDigger[Y]+")");
-             addPercept("smallDigger",smallDiggerPos);
-             
+     		
+     		if(smallDigger[X] == 10 && smallDigger[Y] == 15) {
+     			Literal msg = Literal.parseLiteral("tunnelDigged");
+     			addPercept("smallDigger",msg);
+     		}else{
+	             smallDiggerPos = Literal.parseLiteral("my_pos("+smallDigger[X]+","+smallDigger[Y]+")");
+	             addPercept("smallDigger",smallDiggerPos);
+     		} 
         } else if(agent.equals("bigDigger")) {
 	       	 clearPercepts("bigDigger");
 	         bigDiggerPos = Literal.parseLiteral("my_pos("+bigDigger[X]+","+bigDigger[Y]+")");
@@ -518,14 +559,23 @@ public class planetEnv extends Environment {
 	         
 	    } else if(agent.equals("rescueUnit")) {
 	       	 clearPercepts("rescueUnit");
-	       	rescueUnitPos = Literal.parseLiteral("my_pos("+rescueUnit[X]+","+rescueUnit[Y]+")");
-	         addPercept("rescueUnit",rescueUnitPos);
+	       	 if(rescueUnit[X] == 15 && rescueUnit[Y] == 3 && rescueUnitWay){
+		       	Literal msg = Literal.parseLiteral("finished");
+	     		addPercept("rescueUnit",msg);
+		     } else {
+		       	rescueUnitPos = Literal.parseLiteral("my_pos("+rescueUnit[X]+","+rescueUnit[Y]+")");
+		        addPercept("rescueUnit",rescueUnitPos);
+		     }
 	         
 	    } else if(agent.equals("supplyUnit")) {
 	       	 clearPercepts("supplyUnit");
-	       	supplyUnitPos = Literal.parseLiteral("my_pos("+supplyUnit[X]+","+supplyUnit[Y]+")");
-	         addPercept("supplyUnit",supplyUnitPos);
-	         
+	       	 if(supplyUnit[X] == 15 && supplyUnit[Y] == 3 && supplyUnitWay){
+	       		Literal msg = Literal.parseLiteral("finished");
+     			addPercept("supplyUnit",msg);
+	       	 } else {
+	       		 supplyUnitPos = Literal.parseLiteral("my_pos("+supplyUnit[X]+","+supplyUnit[Y]+")");
+	       		 addPercept("supplyUnit",supplyUnitPos);
+	       	 }
 	    }
         
     }
