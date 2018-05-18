@@ -132,7 +132,7 @@ public class Helper {
 	}
 	
 	public static void setDistance(boolean[][] tunnel, int origD, int origX, int origY, ArrayList<Step> steps){
-		//moving[origX][origY] = new ArrayList<>(steps);
+		moving[origX][origY] = new ArrayList<>(steps);
 		Step newStep = new Step();
 		newStep.x = origX;
 		newStep.y = origY;
@@ -142,24 +142,32 @@ public class Helper {
 			newStep.x--;
 			newSteps.add(newStep);
 			setDistance(tunnel, origD+1, origX-1, origY, newSteps);
+			newSteps.remove(newStep);
+			newStep.x++;
 		}
 		if (origX!=size-2 && tunnel[origX+1][origY] && distance[origX+1][origY]>origD+1){
 			distance[origX+1][origY] = origD + 1;
 			newStep.x++;
 			newSteps.add(newStep);
 			setDistance(tunnel, origD+1, origX+1, origY, newSteps);
+			newSteps.remove(newStep);
+			newStep.x--;
 		}
 		if (origY!=0 && tunnel[origX][origY-1] && distance[origX][origY-1]>origD+1){
 			distance[origX][origY-1] = origD + 1;
 			newStep.y--;
 			newSteps.add(newStep);
 			setDistance(tunnel, origD+1, origX, origY-1, newSteps);
+			newSteps.remove(newStep);
+			newStep.y++;
 		}
 		if (origY!=size-2 && tunnel[origX][origY+1] && distance[origX][origY+1]>origD+1){
 			distance[origX][origY+1] = origD + 1;
-			newStep.y--;
+			newStep.y++;
 			newSteps.add(newStep);
 			setDistance(tunnel, origD+1, origX, origY+1, newSteps);
+			newSteps.remove(newStep);
+			newStep.y--;
 		}
 	}
 	
@@ -174,13 +182,14 @@ public class Helper {
 	public static ArrayList<Step> getSteps(boolean[][] tunnel, int origX, int origY, int destX, int destY) {
 		moving = new ArrayList[size][size];
 		getDistanceInTunnel(tunnel, origX, origY);
+		System.out.print("Distances set.");
 		ArrayList<Step> anssteps = new ArrayList<>();
 		int bestX = origX, bestY = origY;
 		boolean oke = false;
 		
 		
 		do {
-			setRemaining(tunnel, origX, origY);
+			setRemaining(tunnel, destX, destY);
 			for (int i=0; i<size; ++i)
 				for (int j = 0; j<size; ++j) {
 					if (tunnel[i][j] && distance[i][j]+2*remaining[i][j] < distance[bestX][bestY]+2*remaining[bestX][bestY]) {
@@ -188,9 +197,33 @@ public class Helper {
 						bestY = j;
 					}
 				}
+			System.out.println(bestX+"; "+bestY);
 			if (distance[bestX][bestY] == getFreeDistance(origX, origY, bestX, bestY)){
+				System.out.println("OKÉ");
+				
+				int delta = bestX>destX? 1 : -1;
+				int i = destX;
+				while (i != bestX) {
+					Step newStep = new Step();
+					newStep.y = destY;
+					newStep.x = i;
+					i += delta;
+					anssteps.add(newStep);
+				}
+				delta = bestY>destY? 1 : -1;
+				i = destY;
+				while (i != bestY) {
+					Step newStep = new Step();
+					newStep.x = bestX;
+					newStep.y = i;
+					i += delta;
+					anssteps.add(newStep);
+				}
+				origX = bestX;
+				origY = bestY;
+				
 				oke = true;
-				for (int i = moving[bestX][bestY].size()-1; i != 0; --i) {
+				for (i = moving[bestX][bestY].size()-1; i >= 0; --i) {
 					anssteps.add(moving[bestX][bestY].get(i));
 				}
 			}
