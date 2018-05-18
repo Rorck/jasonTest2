@@ -572,8 +572,8 @@ public class planetEnv extends Environment {
      			Literal msg = Literal.parseLiteral("bigTunnelDigged");
      			addPercept("bigDigger",msg);
      		}else{
-		         bigDiggerPos = Literal.parseLiteral("my_pos("+bigDigger[X]+","+bigDigger[Y]+")");
-		         addPercept("bigDigger",bigDiggerPos);
+	         bigDiggerPos = Literal.parseLiteral("my_pos("+bigDigger[X]+","+bigDigger[Y]+")");
+	         addPercept("bigDigger",bigDiggerPos);
      		}
 	         
 	    } else if(agent.equals("rescueUnit")) {
