@@ -493,6 +493,7 @@ public class planetEnv extends Environment {
         		if(bigDiggerStepIndex > 0){
 	        		bigDigger[X] = steps.get(--bigDiggerStepIndex).x;
 	        		bigDigger[Y] = steps.get(bigDiggerStepIndex).y;
+
 	        		if(!(bigDigger[X] == 10 && bigDigger[Y] == 15) ) {
 	        			Resource r = (Resource) planet[smallDigger[X]][smallDigger[Y]];
 	        			if(r == null || r.getType() == 6){
@@ -500,8 +501,11 @@ public class planetEnv extends Environment {
 	        			}
 	        			planet[bigDigger[X]][bigDigger[Y]] = new Resource(4);
 	        		}
+
         		}
-        		
+        		if(!(bigDigger[X] == 10 && bigDigger[Y] == 15) ) {
+        			planet[bigDigger[X]][bigDigger[Y]] = new Resource(4);
+        		}
         	}
         }
         
@@ -541,7 +545,25 @@ public class planetEnv extends Environment {
         // gui.out(getPercepts("col1").toString()+getPercepts("col2").toString()+getPercepts("col3").toString()+getPercepts("builder").toString());
         gui.update();
 
-        
+        try {
+        	step++;
+        	if(agent.equals("col2")){
+        		Thread.sleep(10);
+        	}else if(agent.equals("col3")){
+        		Thread.sleep(200);
+        	}else if(agent.equals("bigDigger")){
+        		Thread.sleep(500);
+        	}else if(agent.equals("smallDigger")){
+        		Thread.sleep(100);
+        	}else if(agent.equals("rescueUnit")){
+        		Thread.sleep(100);
+        	}else if(agent.equals("supplyUnit")){
+        		Thread.sleep(500);
+        	}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
         return true;
 
     }
