@@ -115,7 +115,7 @@ public class Helper {
 			distance = new int[size][size];
 			for (int i = 0; i < size; ++i)
 				for  (int j = 0; j < size; ++j) {
-					//moving[i][j] = new ArrayList<>();
+					moving[i][j] = new ArrayList<>();
 					distance[i][j] = 10000;
 				}
 		}
@@ -132,7 +132,7 @@ public class Helper {
 	}
 	
 	public static void setDistance(boolean[][] tunnel, int origD, int origX, int origY, ArrayList<Step> steps){
-		moving[origX][origY] = new ArrayList<>(steps);
+		//moving[origX][origY] = new ArrayList<>(steps);
 		Step newStep = new Step();
 		newStep.x = origX;
 		newStep.y = origY;
@@ -171,11 +171,13 @@ public class Helper {
 		}
 	}
 	
-	public ArrayList<Step> getSteps(boolean[][] tunnel, int origX, int origY, int destX, int destY) {
+	public static ArrayList<Step> getSteps(boolean[][] tunnel, int origX, int origY, int destX, int destY) {
+		moving = new ArrayList[size][size];
 		getDistanceInTunnel(tunnel, origX, origY);
 		ArrayList<Step> anssteps = new ArrayList<>();
 		int bestX = origX, bestY = origY;
 		boolean oke = false;
+		
 		
 		do {
 			setRemaining(tunnel, origX, origY);
